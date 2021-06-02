@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+body {
+  background: #d2eaf4;
+  font-family: "Lora", serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header {
+  background: #456268;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.itemNav{
+  color: #d2eaf4;
+  border-bottom: 3px solid #d2eaf4;
+  padding: 10px;
+  text-decoration: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+header a:hover {
+  color: #d2eaf4;
+  box-shadow: 5px 5px 10px #d2eaf4;
+  transition: all 0.4s;
 }
 
-.App-link {
-  color: #61dafb;
+.logo {
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ul button {
+  background-color: #d2eaf4;
+  padding: 5px 5px;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-color: #456268;
+  color: #456268;
+  border-radius: 10%;
+}
+
+ul button:hover {
+  background-color: #456268;
+  color: #d2eaf4;
+  transition: all 0.4s;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h5 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
 }

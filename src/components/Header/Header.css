@@ -11,7 +11,7 @@ header {
   
   header a:hover {
     color: #d2eaf4;
-    box-shadow: 5px 5px 10px #d2eaf4;
+    box-shadow: 5px 10px 40px #d2eaf4;
     transition: all 0.4s;
   }
   

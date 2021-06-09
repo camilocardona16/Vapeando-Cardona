@@ -17,7 +17,7 @@ class App extends Component{
     return(
       <>
       <Header />
-      <div className='container'>
+      <div className='container text-center mt-3'>
         <Product title='Producto 1' price='100'/>
         <Product title='Producto 2' price='200'/>
         <Product title='Producto 3' price='300'/>

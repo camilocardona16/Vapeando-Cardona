@@ -8,25 +8,25 @@ export default function Header() {
     return (
         <>
         <header>
-          <nav className="navbar navbar-expand-md justify-content-between">
+          <nav className="navbar navbar-expand-md justify-content-between container">
             <a className="navbar-brand" href="index.html">
-                <img className="logo" src={logo}/>
+                <img className="logo" src={logo} alt='vapeando logo'/>
             </a>
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li className="nav-item active">
-                    <a className="nav-link" className='itemNav' href="index.html"><strong>Home</strong></a>
+                    <a className="itemNav"href="index.html"><strong>Home</strong></a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" className='itemNav' href="membresia.html"><strong>Membresia</strong></a>
+                    <a className="itemNav" href="membresia.html"><strong>Membresia</strong></a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" className='itemNav' href="acerca.html"><strong>Nosotros</strong></a>
+                    <a className="itemNav" href="acerca.html"><strong>Nosotros</strong></a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" className='itemNav' href="productos.html"><strong>Productos</strong></a>
+                    <a className="itemNav" href="productos.html"><strong>Productos</strong></a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" className='itemNav' href="contacto.html"><strong>Contacto</strong></a>
+                    <a className="itemNav" href="contacto.html"><strong>Contacto</strong></a>
                 </li>
               </ul>
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">

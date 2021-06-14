@@ -1,30 +1,40 @@
-import React, {Component} from 'react';
+import React, {useState,useEffect} from 'react';
 import './App.css';
 
 // componentes
 import Header from './components/Header/Header';
 import Product from './components/Product/Product';
 
+function App(){
 
-// componentes de tipo clase
-// componentes de tipo function, dummy
-// las clases tienen un metodo aprticular llamado "render"
-// un fragmento se puede escribir asi <></>
-class App extends Component{
+  const[productos,setProductos]=useState([]);
 
-  render(){
+  useEffect(()=>{
+    setTimeout(() => {
+      fetch('./productos.json',{
+        headers : { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+         }
+      })
+      .then((res)=>{
+        res.json().then((data)=>setProductos(data));
+      });
+    }, 2000);
+
+    
+  },[productos]);
 
     return(
       <>
       <Header />
-      <div className='container text-center mt-3'>
-        <Product title='Producto 1' price='100'/>
-        <Product title='Producto 2' price='200'/>
-        <Product title='Producto 3' price='300'/>
+      <div className='container align-content-center row'>
+        {productos.map((product,index)=>{
+          return <Product key={index} title={product.name} price={product.precio} img={product.imagen} desc={product.descripcion} puntuacion={product.puntuacion} />
+        })}
       </div>
       </>
     );
   }
-}
 
 export default App;

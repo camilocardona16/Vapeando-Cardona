@@ -18,7 +18,7 @@ function Home() {
     return (
         <>
       <Header />
-      <section className="container">
+      <section className="container mt-3">
       <div className='text-center row'>
         {productos.map((product,index)=>{
           return <Product key={index} title={product.name} price={product.precio} img={product.imagen} desc={product.descripcion} puntuacion={product.puntuacion} />

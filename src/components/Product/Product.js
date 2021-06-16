@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './Product.css'
+import swal from 'sweetalert';
 
 export default function Product({title,price,img,puntuacion,desc}) {
 
   const [cantidad,setCantidad]= useState(1);
+  
   return (
       <>
         <div className="col-md-6 col-lg-4">
@@ -28,24 +30,37 @@ export default function Product({title,price,img,puntuacion,desc}) {
                 <div className="col">
                     <div className="profile-overview">
                         <p >Agregar: {cantidad}</p>
-                        <a href='/#' className="btn btn-info btn-" onClick={()=>{
+                        <a href='/#' className="btn btn-info" onClick={()=>{
                           if(cantidad===5){
-                            alert("no puedes hacer esto");
+                            swal({
+                              title: "Lo sentimos",
+                              text: "No puedes agregar mas de 5 productos",
+                              icon: "warning",
+                            });
                           }else{
                             setCantidad(cantidad+1)
                           }
                           }} type="button">+
                         </a>
-                        <a href='/#' className="btn btn-info"onClick={()=>{
+                        <a href='/#' className="btn btn-info" onClick={()=>{
                           if(cantidad===1){
-                            alert("no puedes hacer esto");
+                            swal({
+                              title: "Lo sentimos",
+                              text: "No puedes tener menos de 1 producto",
+                              icon: "warning",
+                            });
                           }else{
                             setCantidad(cantidad-1)
                           }
                           }}type="button">-
                         </a>
-                        <a href='/#' className="btn btn-info"onClick={()=>{
-                          alert(`Agregaste ${cantidad} al carrito`)
+                        <a href='/#' className="btn btn-info" onClick={()=>{
+                          // alerta(`Agregaste ${cantidad} al carrito`)
+                          swal({
+                            title: "Bien",
+                            text: `Agregaste ${cantidad} al carrito`,
+                            icon: "success",
+                          });
                           }}type="button">agregar
                         </a>
                     </div>

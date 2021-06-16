@@ -18,11 +18,13 @@ function Home() {
     return (
         <>
       <Header />
+      <section className="container">
       <div className='text-center row'>
         {productos.map((product,index)=>{
           return <Product key={index} title={product.name} price={product.precio} img={product.imagen} desc={product.descripcion} puntuacion={product.puntuacion} />
         })}
       </div>
+      </section>
       </>
     )
 }

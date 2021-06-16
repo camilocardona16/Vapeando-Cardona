@@ -12,8 +12,10 @@ function App(){
 
     return(
       <>
-      <Home className="container"/>
-      <Foter/>
+      <body>
+        <Home/>
+        <Foter/>  
+      </body>
       </>
     );
   }

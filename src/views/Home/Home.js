@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import Header from '../Header/Header';
-import Product from '../Product/Product';
+import Product from '../../components/Product/Product';
 import axios from 'axios';
 
 function Home() {
@@ -17,11 +16,10 @@ function Home() {
 
     return (
         <>
-      <Header />
       <section className="container mt-3">
       <div className='text-center row'>
         {productos.map((product,index)=>{
-          return <Product key={index} title={product.name} price={product.precio} img={product.imagen} desc={product.descripcion} puntuacion={product.puntuacion} />
+          return <Product key={index} title={product.nombre} price={product.precio} img={product.imagen} desc={product.descripcion} puntuacion={product.puntuacion} />
         })}
       </div>
       </section>

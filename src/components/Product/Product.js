@@ -1,14 +1,50 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import './Product.css'
 import swal from 'sweetalert';
-
-import Badge from 'react-bootstrap/Badge';
 import {Modal,Button,Container,Row,Col} from 'react-bootstrap';
 
-export default function Product({title,price,img,puntuacion,desc}) {
+import {CartContext} from '../../CartContext';
+
+export default function Product({id,title,price,img,puntuacion,desc}) {
 
   const [cantidad,setCantidad]= useState(1);
   let[showDetalle,setshowDetalle]=useState(false);
+  let[items,setItems]=useContext(CartContext);
+
+  function addCart(){
+    let prods=items;
+    if(prods.length==0){
+      prods.push({
+        'id':id,
+        'imagen':img,
+        'nombre':title,
+        'precio':price,
+        'cantidad':cantidad,
+        'subtotal':price * cantidad
+      });
+      setItems(prods);
+    }else{
+      let esta=false;
+      for (let i = 0; i < prods.length; i++) {
+        if(prods[i].id==id){
+          swal({title: "ya esta en el carrito",icon: "info",})
+          esta=true;
+          break;
+        }
+      }
+      if(esta==false){
+        prods.push({
+          'id':id,
+          'imagen':img,
+          'nombre':title,
+          'precio':price,
+          'cantidad':cantidad,
+          'subtotal':price * cantidad
+        })
+        setItems(prods);
+      }
+    }
+  }
 
   return (
       <>
@@ -102,11 +138,7 @@ export default function Product({title,price,img,puntuacion,desc}) {
           </Modal.Body>
           <Modal.Footer>
             <Button block variant="success" onClick={()=>{
-              swal({
-                title: "Bien",
-                text: `Agregaste ${cantidad} al carrito`,
-                icon: "success",
-              });
+              addCart();
               setshowDetalle();
               }}>
                 Agregar

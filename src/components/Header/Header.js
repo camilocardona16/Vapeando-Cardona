@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
+import {CartContext} from '../../CartContext';
+import swal from 'sweetalert';
 
 import logo from '../../img/logo.png';
 import './Header.css';
@@ -12,11 +14,23 @@ export default function Header() {
   let[showLogin,setshowLogin]=useState(false);
   let[showCrear,setshowCrear]=useState(false);
 
-  let[items,setItems]=useState([]);
-  
+  let[items,setItems]=useContext(CartContext);
 
-  function cargarItems(){
-    console.log('cargandoitems');
+  let[factura,setFactura]=useState(0);
+
+  function facturar(){
+    let total=0;
+    for (let i = 0; i < items.length; i++) {
+      total=total+items[i].subtotal;
+    }
+    setFactura(total);
+  }
+
+  function eliminar(pos){
+    const prods=items;
+    let news= prods.splice(pos,1)
+    setItems(items,news);
+    setshowCarrito(false);
   }
 
   function login(event){
@@ -66,7 +80,7 @@ export default function Header() {
       {/* Modal Carrito  */}
         <Modal  show={showCarrito}
                 onHide={()=>{setshowCarrito(false)}}
-                onEntered={()=>{cargarItems()}}
+                onEnter={()=>{facturar()}}
                 size="lg"
                 centered>
           <Modal.Header closeButton>
@@ -80,11 +94,26 @@ export default function Header() {
                 <Col xs='3' md='3'>Cantidad</Col>
                 <Col xs='3' md='3'>SubTotal</Col>
               </Row>
+              {items.map((item,index)=>{
+                return <>
+                  <Row>
+                    <Col xs='3' md='3'> <img src={item.imagen} className="w-100" alt='imgcarrito'></img>
+                     {item.nombre}
+                    </Col>
+                    <Col xs='3' md='3'>{item.precio}</Col>
+                    <Col xs='3' md='3'>{item.cantidad}</Col>
+                    <Col xs='3' md='3'>{item.subtotal} <Button variant='danger' onClick={()=>{eliminar(index)}}>X</Button></Col>
+                  </Row>
+                </>
+              })}
+              
             </Container>
           </Modal.Body>
           <Modal.Footer>
             <Button variant='warning' onClick={()=>{setshowCarrito(false)}}>Cerrar</Button>
-            <Button variant='success' onClick={()=>{setshowCarrito(false)}}>Pagar</Button>
+            <Button variant='success' onClick={()=>{setshowCarrito(false);swal({title: "Facturado",icon: "success",});}}>
+              Pagar: {factura}
+            </Button>
           </Modal.Footer>
         </Modal>
 

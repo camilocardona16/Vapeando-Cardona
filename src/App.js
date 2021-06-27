@@ -11,11 +11,15 @@ import Membresia from './views/Membresia/Membresia'
 import Nosotros from './views/Nosotros/Nosotros'
 import Contacto from './views/Contacto/Contacto'
 
+// context
+import {CartProvider} from './CartContext';
+
 function App(){
 
 
     return(
       <>
+      <CartProvider>
         <Router>
           <Header/>
           <body>
@@ -28,6 +32,7 @@ function App(){
             <Foter/>  
           </body>
         </Router>
+      </CartProvider>
       </>
     );
   }

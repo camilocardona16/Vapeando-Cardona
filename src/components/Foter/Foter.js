@@ -17,36 +17,36 @@ function Foter() {
                 <div className=" col-sm-4 col-md-4 col-12">
                     <h5 className="foot_borde headin5_amrc foot_item">Enlaces de interes</h5>
                     <ul className="footer_ul">
-                        <li><a href="#">Ultimos productos</a></li>
-                        <li><a href="#">Vapeadores economicos</a></li>
-                        <li><a href="#">Pods Modernos</a></li>
-                        <li><a href="#">Esencias Premium</a></li>
-                        <li><a href="#">Esencias en promocion</a></li>
+                        <li><a href="/#">Ultimos productos</a></li>
+                        <li><a href="/#">Vapeadores economicos</a></li>
+                        <li><a href="/#">Pods Modernos</a></li>
+                        <li><a href="/#">Esencias Premium</a></li>
+                        <li><a href="/#">Esencias en promocion</a></li>
                     </ul>
                 </div>
                 <div className=" col-sm-4 col-md col-12">
                     <h5 className="foot_borde headin5_amrc foot_item">Nuestra membresia VaperPro</h5>
                     <ul className="footer_ul">
-                        <li><a href="#">¿Como funciona?</a></li>
-                        <li><a href="#">Beneficios</a></li>
-                        <li><a href="#">Articulos para VaperPro</a></li>
+                        <li><a href="/#">¿Como funciona?</a></li>
+                        <li><a href="/#">Beneficios</a></li>
+                        <li><a href="/#">Articulos para VaperPro</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div className="container">
-            <p className=" text-center justify-content-center">Copyright @2021 | Designed With by <a href="#">Vapeando</a></p>
+            <p className=" text-center justify-content-center">Copyright @2021 | Designed With by <a href="/#">Vapeando</a></p>
             <ul className="social_footer_ul">
                 <div className="row justify-content-between">
                     <div className="col-2">
-                        <li><a href="#"><i className="fab fa-facebook-f"/></a></li>
+                        <li><a href="/#"><i className="fab fa-facebook-f"/></a></li>
                     
                     </div>
                     <div className="col-2">
-                        <li><a href="#"><i className="fab fa-instagram"></i></a></li>
+                        <li><a href="/#"><i className="fab fa-instagram"></i></a></li>
                     </div>
                     <div className="col-2">
-                        <li><a href="#"><i className="fab fa-whatsapp" ></i></a></li>
+                        <li><a href="/#"><i className="fab fa-whatsapp" ></i></a></li>
                     </div>
                 </div>
             </ul>

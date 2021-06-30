@@ -6,6 +6,7 @@ import logo from '../../img/logo.png';
 import './Header.css';
 import {Link} from 'react-router-dom';
 import {Modal,Button,Container,Row,Col,Form} from 'react-bootstrap';
+import {Badge} from 'react-bootstrap';
 
 
 export default function Header() {
@@ -17,17 +18,22 @@ export default function Header() {
   let[items,setItems]=useContext(CartContext);
 
   let[factura,setFactura]=useState(0);
+  let[totalItems,setTotalItems]=useState(0);
 
   function facturar(){
     let total=0;
+    let tp=0;
     for (let i = 0; i < items.length; i++) {
       total=total+items[i].subtotal;
+      tp=tp+items[i].cantidad;
     }
+    setTotalItems(tp);
     setFactura(total);
   }
 
   function eliminar(pos){
     const prods=items;
+    setTotalItems(totalItems-(items[pos].cantidad));
     let news= prods.splice(pos,1)
     setItems(items,news);
     setshowCarrito(false);
@@ -81,10 +87,11 @@ export default function Header() {
         <Modal  show={showCarrito}
                 onHide={()=>{setshowCarrito(false)}}
                 onEnter={()=>{facturar()}}
+                onExit={()=>{setTotalItems(0)}}
                 size="lg"
                 centered>
           <Modal.Header closeButton>
-            <Modal.Title>Mi Carrito</Modal.Title>
+            <Modal.Title>Productos en carrito: <Badge className='bg-primary text-with'>{totalItems}</Badge></Modal.Title>
           </Modal.Header>
           <Modal.Body scrollable>
             <Container>
@@ -94,6 +101,7 @@ export default function Header() {
                 <Col xs='3' md='3'>Cantidad</Col>
                 <Col xs='3' md='3'>SubTotal</Col>
               </Row>
+              {items.length===0? <Row><Badge className='bg-primary text-with'>Agrega productos al carrito</Badge></Row>:null}
               {items.map((item,index)=>{
                 return <>
                   <Row>
@@ -111,9 +119,10 @@ export default function Header() {
           </Modal.Body>
           <Modal.Footer>
             <Button variant='warning' onClick={()=>{setshowCarrito(false)}}>Cerrar</Button>
-            <Button variant='success' onClick={()=>{setshowCarrito(false);swal({title: "Facturado",icon: "success",});}}>
+            {items.length!==0?
+            <Button variant='success' onClick={()=>{setshowCarrito(false);swal({title: "Facturado",icon: "success",});setItems([])}}>
               Pagar: {factura}
-            </Button>
+            </Button>:null}
           </Modal.Footer>
         </Modal>
 

@@ -1,15 +1,27 @@
 import React, {useState,useEffect} from 'react';
 import Product from '../../components/Product/Product';
-import axios from 'axios';
+// import axios from 'axios';
+import {db} from '../../Firebase'
 
 function Home() {
 
   const[productos,setProductos]=useState([]);
 
   useEffect(()=>{
-      axios.get('./productos.json').then((res)=>{setProductos(res.data)});
-  },[productos]);
+      obtenerProductos();
+      // axios.get('./productos.json').then((res)=>{setProductos(res.data)});
+  },[]);
 
+  const obtenerProductos = ()=>{
+    db.collection('productos').onSnapshot((qS)=>{
+      const docs=[];
+      qS.forEach(element => {
+        docs.push({...element.data(),id:element.id});
+      });
+      // todos los productos.
+      setProductos(docs);
+    });
+  }
     return (
         <>
       <section className="container mt-3">

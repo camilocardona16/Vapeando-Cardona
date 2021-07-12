@@ -5,11 +5,11 @@ import swal from 'sweetalert';
 import logo from '../../img/logo.png';
 import './Header.css';
 import {Link} from 'react-router-dom';
-import {Modal,Button,Container,Row,Col,Form} from 'react-bootstrap';
+import {Modal,Button,Container,Row,Col,Form,Accordion,Card} from 'react-bootstrap';
 import {Badge} from 'react-bootstrap';
 
 // autenticacion con firebase.
-import {auth} from '../../Firebase';
+import {auth,db} from '../../Firebase';
 
 
 export default function Header() {
@@ -30,6 +30,10 @@ export default function Header() {
   // controla el resultado total del valor del carrito
   let[factura,setFactura]=useState(0);
   let[totalItems,setTotalItems]=useState(0);
+  
+  // variable para almacenar mis facturas:
+  let[misFac,setMisFac]=useState([]);
+
 
   function facturar(){
     let total=0;
@@ -42,11 +46,35 @@ export default function Header() {
     setFactura(total);
   }
 
+  async function misFacturas(){
+    let facs=[];
+    await db.collection("facturas_usuario").where("usuario", "==", datosUser.email)
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            facs.push({'id':doc.id,'prods':doc.data()});
+            // console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+    setMisFac(facs);
+  }
+
   function pagarCuenta() {
     if(autenticado==false){
       return swal({title: "Debes estar autenticado para confirmar la compra",icon: "warning",})
     }
-    setshowCarrito(false);swal({title: "Facturado",icon: "success",});setItems([])
+    let data={
+      'productos':items,
+      'totalI':totalItems,
+      'totalP':factura,
+      'usuario':datosUser.email
+    }
+    db.collection('facturas_usuario').doc().set(data)
+    setshowCarrito(false);swal({title: "Facturado",icon: "success",});setItems([]);
     
   }
 
@@ -129,7 +157,7 @@ export default function Header() {
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 {autenticado ?
                 <>
-                  <li><button onClick={()=>{setshowMiAccount(true)}} id="btn-ingresar" type="button" disabled>{datosUser.email}</button></li>
+                  <li><button onClick={()=>{setshowMiAccount(true)}} id="btn-ingresar" type="button">Mis facturas</button></li>
                   <li><button onClick={()=>{setAutenticado(false);swal({title: "Saliste de tu cuenta",icon: "success"})}} id="btn-ingresar" type="button">Salir</button></li>
                 </>
                 :
@@ -153,7 +181,7 @@ export default function Header() {
           <Modal.Header closeButton>
             <Modal.Title>Productos en carrito: <Badge className='bg-primary text-with'>{totalItems}</Badge></Modal.Title>
           </Modal.Header>
-          <Modal.Body scrollable>
+          <Modal.Body scrollable='true'>
             <Container>
               <Row>
                 <Col xs='3' md='3'>Producto</Col>
@@ -244,6 +272,49 @@ export default function Header() {
           </Form>
         </Modal>
       
+      {/* Modal mis facturas */}
+      <Modal  show={showMiAccount}
+              onEnter={()=>{misFacturas()}}
+              onHide={()=>{setshowMiAccount(false)}}>
+          <Modal.Header closeButton>
+            <Modal.Title>Mis Facturas</Modal.Title>
+          </Modal.Header>
+            <Modal.Body scrollable='true' >
+            {misFac.length===0? <Row><Badge className='bg-primary text-with'>Aun no tienes facturas registradas</Badge></Row>:null}
+              <Accordion>
+                {misFac.map((fac)=>{
+                  return <Card>
+                    <Card.Header>
+                      <Accordion.Toggle as={Button} variant="link" eventKey={fac.id}>{fac.id}</Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey={fac.id}>
+                      <Card.Body>
+                        <Row>
+                          <Col className='text-center'><strong>Item</strong></Col>
+                          <Col className='text-center'><strong>Cantidad</strong></Col>
+                          <Col className='text-center'><strong>Subtotal</strong></Col>
+                        </Row>
+                        {fac.prods.productos.map(element => {
+                        return <Row>
+                          <Col> <img src={element.imagen} className="w-100" alt='imgcarrito'></img>
+                            {element.nombre}
+                          </Col>
+                          <Col className='text-center'>{element.precio}</Col>
+                          <Col className='text-center'>{element.subtotal}</Col>
+                        </Row>
+                        })}
+                        <Badge className='bg-primary text-with'>Articulos: {fac.prods.totalI}</Badge>
+                        <Badge className='bg-primary text-with'>Total: {fac.prods.totalP}</Badge>
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                })}
+              </Accordion>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='danger' onClick={()=>{setshowMiAccount(false)}}>Cerrar</Button>
+            </Modal.Footer>
+        </Modal>
         </>
     )
 }
